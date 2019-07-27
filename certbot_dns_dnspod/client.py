@@ -46,32 +46,31 @@ class DnspodClient(object):
 
     session = requests.session()
     ttl = 600
-    endpoint = "https://dnsapi.cn"
+    endpoint = "https://api.dnspod.com"
 
-    def __init__(self, email=None, token=None):
-        self.common_params = {}
-        self.set_credentials(email, token)
+    def __init__(self, email=None, password=None):
+        self.common_params = { 'format': 'json' }
+        self.set_credentials(email, password)
 
-    def set_credentials(self, email, token):
+    def set_credentials(self, email, password):
         """Setup credentials for DNSPOD API
 
         :param str email: You need to provide a valid email address to use
             DNSPOD api. More details can be found in
             (https://www.dnspod.cn/docs/info.html).
-        :param str token: The DNSPOD API Token, you can find it in
+        :param str password: The DNSPOD API Token, you can find it in
             [https://www.dnspod.cn/console/user/security].
         """
-
-        if email is not None:
-            self.session.headers.update({
-                "User-Agent":
-                "CertbotDnspod/{0}({1})".format(__version__, email)
-            })
-        if token is not None:
-            self.common_params = dict(
-                login_token=token, format="json",
-                lang="en", error_on_empty="no",
+        if email and password:
+            data = self._call(
+                    "Auth",
+                    {
+                        'login_email': email,
+                        'login_password': password,
+                        'format': 'json',
+                    }
             )
+            self.common_params['user_token'] = data['user_token']
 
     def add_txt_record(self, record, value):
         """
@@ -92,7 +91,7 @@ class DnspodClient(object):
                 "domain": domain,
                 "sub_domain": sub_domain,
                 "record_type": u"TXT",
-                "record_line": u"默认",
+                "record_line": u"default",
                 "value": value,
                 "ttl": self.ttl
             }
@@ -159,7 +158,7 @@ class DnspodClient(object):
         logger.error(u"TXT record of %s not found", record)
 
     def _call(self, method, payload):
-        """Attach common params and api token for dnspod api request
+        """Attach common params and api password for dnspod api request
 
         :param str method: DNSPOD Api name
         :param dict payload: DNSPOD Api params
