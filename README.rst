@@ -1,7 +1,7 @@
 DNSPOD DNS Authenticator plugin for Certbot
 -------------------------------------------
-.. image:: https://travis-ci.org/AssrtOSS/certbot-dns-dnspod.svg?branch=master
-    :target: https://travis-ci.org/AssrtOSS/certbot-dns-dnspod
+.. image:: https://travis-ci.com/AssrtOSS/certbot-dns-dnspod.svg?branch=master
+    :target: https://travis-ci.com/AssrtOSS/certbot-dns-dnspod
 .. image:: https://coveralls.io/repos/github/AssrtOSS/certbot-dns-dnspod/badge.svg?branch=master
     :target: https://coveralls.io/github/AssrtOSS/certbot-dns-dnspod?branch=master
 
