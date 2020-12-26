@@ -43,12 +43,14 @@ class Authenticator(dns_common.DNSAuthenticator):
             "DNSPOD credentials INI file",
             {
                 "email": "email address associated with DNSPOD account",
-                "password": "API Token for DNSPOD account"
+                "api-id": "API Token ID for DNSPOD account",
+                "api-token": "API Token for DNSPOD account",
             }
         )
         self.dnspod.set_credentials(
             credentials.conf("email"),
-            credentials.conf("password")
+            credentials.conf("api-id"),
+            credentials.conf("api-token")
         )
 
     def _perform(self, domain, validation_domain_name, validation):

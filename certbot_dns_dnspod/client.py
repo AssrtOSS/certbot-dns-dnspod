@@ -48,29 +48,30 @@ class DnspodClient(object):
     ttl = 600
     endpoint = "https://api.dnspod.com"
 
-    def __init__(self, email=None, password=None):
+    def __init__(self, email=None, id=None, token=None):
         self.common_params = { 'format': 'json' }
-        self.set_credentials(email, password)
+        self.set_credentials(email, id,  token)
 
-    def set_credentials(self, email, password):
+    def set_credentials(self, email, id, token):
         """Setup credentials for DNSPOD API
 
         :param str email: You need to provide a valid email address to use
             DNSPOD api. More details can be found in
             (https://www.dnspod.cn/docs/info.html).
-        :param str password: The DNSPOD API Token, you can find it in
+        :param str id: The DNSPOD API Token ID, you can find it in
+            [https://www.dnspod.cn/console/user/security].
+        :param str token: The DNSPOD API Token, you can find it in
             [https://www.dnspod.cn/console/user/security].
         """
-        if email and password:
-            data = self._call(
-                    "Auth",
-                    {
-                        'login_email': email,
-                        'login_password': password,
-                        'format': 'json',
-                    }
-            )
-            self.common_params['user_token'] = data['user_token']
+        if email is not None and False:
+            self.session.headers.update({
+                "User-Agent":
+                "CertbotDnspod/{0}({1})".format(__version__, email)
+            })
+        self.common_params = dict(
+            login_token="%s,%s" % (id, token), format="json",
+            lang="en", error_on_empty="no",
+        )
 
     def add_txt_record(self, record, value):
         """

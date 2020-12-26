@@ -22,7 +22,8 @@ Create a credentials file
 .. code-block:: ini
 
     certbot_dns_dnspod:dns_dnspod_email = "DNSPOD-EMAIL"
-    certbot_dns_dnspod:dns_dnspod_password = "DNSPOD-PASSWORD"
+    certbot_dns_dnspod:dns_dnspod_api_id = "DNSPOD-API-TOKEN-ID"
+    certbot_dns_dnspod:dns_dnspod_api_token = "DNSPOD-API-TOKEN"
 
 
 Generate a certificate
